@@ -321,27 +321,48 @@
 
       const validateCardNumber = ({target}) => {
         const cardValid = validateWithLuhn(target.value);
-        flagIfInvalid(target,cardValid);
+        flagIfInvalid(target, cardValid);
         return cardValid;
+      }
+
+
+      const validatcardCardNumber = () =>{
+
+
       }
 
       const uiCanInteract = () => {
         const ccdiv = document.querySelector('[data-cc-digits]');
         const ccdiv2 = document.querySelector('[data-cc-info]');
-        const ccdiv3 = document.querySelector('[data-pay-btn]')
-        const detectCardType = ccdiv.addEventListener('blur', () =>{
+        const ccdiv3 = document.querySelector('[data-pay-btn]');
+
+        console.log(ccdiv3)
+        //const detectCardType
+        ccdiv.addEventListener('blur', () =>{
 
         });
-        const validateCardHolderName = ccdiv2.addEventListener('blur', () =>{
+        ccdiv2.addEventListener('click', (e)=>{
+          e.preventDefault();
+          consol.log(e);
+          validateCardNumber();
+        });
+        // const validateCardHolderName = () => {
+        //   ccdiv2.addEventListener('click', (e) =>{
+        //   e.preventDefault();
+        //   console.log(e);
+        //   validateCardNumber(e);
+        //   console.log(validateCardNumber(e));
+        // });
+
+        //};
+        validateCardHolderName();
+        ccdiv2.addEventListener('blur', () => {
 
         });
-        const validateCardExpiryDate = ccdiv2.addEventListener('blur', () => {
-
+        ccdiv23.addEventListener('click', () =>{
+          ccdiv.focus;
         });
-        const validatcardCardNumber = ccdiv23.addEventListener('click', () =>{
 
-        });
-         ccdiv.focus;
       };
 
       const total = {results:[1,2]};
