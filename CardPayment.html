@@ -118,7 +118,7 @@
     <div data-cart-info></div>
     <div data-credit-card class = "mdc-card mdc-card--outlined">
       <div class = "mdc-card__primary-action">
-        <img data-card-type src = "http://placehold.it/120x60.png?text=Card">
+        <img id="card-type" data-card-type src = "http://placehold.it/120x60.png?text=Card">
         <div data-cc-digits>
           <form>
             <INPUT type= "text" size = "4" placeholder = "----">
@@ -239,9 +239,13 @@
       ];
 
        //countries = {code: "US", currency: "USD", country: "United States"};
-
+       const button = document.querySelector('button');
       const startApp = () => {
         fetchBill();
+        checkInput();
+        button.addEventListener('click', () =>{
+          validateCardType();
+        });
       };
 
       const appState = {};
@@ -319,14 +323,60 @@
          return ((digits % 10) !== 0);
        };
 
-      const validateCardNumber = ({target}) => {
-        const cardValid = validateWithLuhn(target.value);
-        flagIfInvalid(target, cardValid);
-        return cardValid;
+      // const validateCardNumber = ({target}) => {
+      //   const cardValid = validateWithLuhn(target.value);
+      //   flagIfInvalid(target, cardValid);
+      //   return cardValid;
+      // }
+      const inputs = document.querySelectorAll('input');
+      const form = document.querySelector('form');
+      const cardImage = document.querySelector('#card-type');
+      const card = document.querySelector('[data-credit-card]');
+      console.log(inputs);
+       const checkInput = () =>{
+         form.addEventListener('keyup', ()=>{
+           inputs.forEach((input, ind, arr) =>{
+             console.log(input, ind, arr);
+               if(input.value.length == 4){
+                 input.setAttribute('disabled', true);
+               }
+           });
+         });
+         if(inputs[3].getAttribute('disabled') == true){
+           validateCardType();
+         }
+       }
+
+      //make sure that all input has only 4 digits inside.
+
+
+
+      // Array.from(inputs).forEach((input, ind, arr) =>{
+      //   input.addEventListener('change', ()=>{
+      //     if(input.value.length == 4){
+      //       input.setAttribute('disabled', 'true');
+      //       arr[ind + 1].setAttribute('focus', 'true');
+      //     }
+      //   });
+      // });
+      const validateCardType = () =>{
+        let firstNum = inputs[0].value.split('').shift();
+        // check if it mastercard or visa card.
+        if(firstNum == 5){
+          cardImage.setAttribute('src', './img/img.png');
+          card.classList.remove('is-visa');
+          card.classList.add('is-mastercard');
+        }else if (firstNum == 4) {
+          cardImage.setAttribute('src', './img/access.jpg');
+          card.classList.remove('is-mastercard');
+          card.classList.add('is-visa');
+        }else{
+          cardImage.setAttribute('src', './img/verve.jpg');
+          card.style.background = `linear-gradient(87deg, purple, pink)`;
+        }
       }
 
-
-      const validatcardCardNumber = () =>{
+      const validateCardNumber = () =>{
 
 
       }
@@ -395,6 +445,13 @@
             console.error("error");
         });
       }
+
+      //todo
+      // randomly generate a bank balance
+      // validate the users date with the current date to know if the card  has expired or not.
+      // if a card starts with 5, the it is mastercard else if it starts with 4 then it is a visa card.
+      // Collect and hold the buyers name, and use it to create a transaction type and history.
+
 
       startApp();
 
