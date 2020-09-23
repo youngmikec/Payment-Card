@@ -115,6 +115,9 @@
         <div style="text-align: right;">
           <span id="balance"></span>
         </div>
+        <div id="transaction-message" style="text-align: center;">
+
+        </div>
       </h1>
     </div>
 
@@ -211,15 +214,23 @@
           if(validateCardType() && validateCardExpiryDate(document.querySelector('#year').value)){
             if(isBalanceEnough(balance, appState.bill)){
               makePayment();
+              createTransactionMessage(`
+              Transaction successful
+              <hr>
+              <h2 style="color: red;">Debit</h2>
+              you account balance has been debited with the sum of $${appState.bill}`);
             }else{
               declinePayment();
             }
           }else if(!validateCardType() && validateCardExpiryDate(document.querySelector('#year').value)){
             console.log('invalid card type');
+            createTransactionMessage('invalid card type');
           }else if(validateCardType() && !validateCardExpiryDate(document.querySelector('#year').value)){
             console.log('Card has expired, please visit your nearest bank');
+            createTransactionMessage('Card has expired, please visit your nearest bank');
           }else{
             console.log('Card does not exist.');
+            createTransactionMessage('Card does not exist');
 
           }
           
@@ -235,6 +246,11 @@
         })
         console.log(amount);
         return amount.toLocaleString(`en-${country.code}`, {style:'currency', currency:country.currency});
+      }
+
+      const createTransactionMessage = (msg) =>{
+        let tdiv = document.querySelector('#transaction-message');
+        tdiv.textContent = msg;
       }
 
       const isBalanceEnough = (balance, total) =>{
