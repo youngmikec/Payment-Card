@@ -161,7 +161,12 @@
         }
         return decision;  
       }
-      const validateCardHolderName = ({target}) => {
+      const validateCardHolderName = (name) => {
+        if(name != ''){
+          return true;
+        }else{
+          return false;
+        }
 
       };
        const validateWithLuhn = (digits) =>{
