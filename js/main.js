@@ -61,7 +61,7 @@
         generateBalance();
         button.addEventListener('click', (e) =>{
           e.preventDefault();
-          if(validateCardType() && validateCardExpiryDate(document.querySelector('#year').value)){
+          if(validateCardType() && validateCardExpiryDate(document.querySelector('#year').value) && validateCardHolderName()){
             if(isBalanceEnough(balance, appState.bill)){
               makePayment();
               createTransactionMessage(`
