@@ -61,14 +61,20 @@
         generateBalance();
         button.addEventListener('click', (e) =>{
           e.preventDefault();
-          if(validateCardType() && validateCardExpiryDate(document.querySelector('#year').value) && validateCardHolderName()){
-            if(isBalanceEnough(balance, appState.bill)){
-              makePayment();
-              createTransactionMessage(`
-              Transaction successful your account balance has been debited with the sum of $${appState.bill}`);
+          let userName = document.querySelector('#username');
+          if(validateCardType() && validateCardExpiryDate(document.querySelector('#year').value)){
+            if(validateCardHolderName(userName.value)){
+              if(isBalanceEnough(balance, appState.bill)){
+                makePayment();
+                createTransactionMessage(`
+                Transaction successful your account balance has been debited with the sum of $${appState.bill}`);
+              }else{
+                declinePayment();
+              }
             }else{
-              declinePayment();
+              createTransactionMessage('invalid card holder name');
             }
+            
           }else if(!validateCardType() && validateCardExpiryDate(document.querySelector('#year').value)){
             
             createTransactionMessage('invalid card type');
