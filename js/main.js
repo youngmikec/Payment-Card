@@ -4,6 +4,27 @@
         mastercard: 'mastercard'
       };
 
+      const users = [
+        {
+          id: 1,
+          username: 'Ozor Michael',
+          cardExpiryDate: '06/28',
+          cardNumber: '4426152444321987'
+        },
+        {
+          id: 2,
+          username: 'Ozor Johnmark',
+          cardExpiryDate: '12/21',
+          cardNumber: '5678876556674567'
+        },
+        {
+          id: 3,
+          username: 'Mike Willson',
+          cardExpiryDate: '01/24',
+          cardNumber: '4091254200181020'
+        }
+      ]
+
       const countries = [
         {
           code: "US",
