@@ -76,6 +76,12 @@
        //countries = {code: "US", currency: "USD", country: "United States"};
        const button = document.querySelector('button');
 
+
+      const getUser = (name) =>{
+        return users.find(user => user.username == name);
+      }
+      
+
       const startApp = () => {
         fetchBill();
         checkInput();
@@ -189,9 +195,12 @@
         return decision;  
       }
       const validateCardHolderName = (name) => {
-        if(name != ''){
+        let user = getUser(name);
+        if(user.username != ''){
+          console.log('user is valid');
           return true;
         }else{
+          console.log('user does not exist.')
           return false;
         }
 
