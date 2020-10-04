@@ -89,7 +89,7 @@
         button.addEventListener('click', (e) =>{
           e.preventDefault();
           let userName = document.querySelector('#username');
-          if(validateCardType() && validateCardExpiryDate(document.querySelector('#year').value)){
+          if(validateCardNumber(userName.value) && validateCardExpiryDate(document.querySelector('#year').value)){
             if(validateCardHolderName(userName.value)){
               if(isBalanceEnough(balance, appState.bill)){
                 makePayment();
@@ -266,8 +266,21 @@
         }
       }
 
-      const validateCardNumber = () =>{
-
+      const validateCardNumber = (name) =>{
+        let inputs = document.querySelectorAll('.cardnumber');
+        let user = getUser(name);
+        let cardNum = '';
+        Array.from(inputs).forEach(inp =>{
+          cardNum+=inp.value;
+          console.log(inp.value, cardNum);
+        });
+        
+        
+        if(user.cardNumber == cardNum){
+          console.log('card valid for the specified user');
+        }else{
+          console.log('Card number does not match. pls enter the correct card number', inputs);
+        }
 
       }
 
