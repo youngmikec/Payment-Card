@@ -89,7 +89,7 @@
         button.addEventListener('click', (e) =>{
           e.preventDefault();
           let userName = document.querySelector('#username');
-          if(validateCardNumber(userName.value) && validateCardExpiryDate(document.querySelector('#year').value)){
+          if(validateCardNumber(userName.value) && validateCardExpiryDate(document.querySelector('#year').value, userName.value)){
             if(validateCardHolderName(userName.value)){
               if(isBalanceEnough(balance, appState.bill)){
                 makePayment();
@@ -176,14 +176,14 @@
       }
 
 
-      const validateCardExpiryDate = (mmyy) => {
-        
+      const validateCardExpiryDate = (mmyy, name) => {
+        let user = getUser(name);
         let decision;
         let date = new Date();
         let month = `${date.getMonth() + 1}`;
         let year = `${date.getFullYear()}`.split('').splice(2, 2).join('');
         mmyy = mmyy.split('/')
-        if(mmyy[1] >= year){
+        if(mmyy[1] >= user.cardExpiryDate){
           decision = true;
           mmyy.join('').toString();
           year.toString();
@@ -192,6 +192,15 @@
           decision = false;
 
         }
+        // if(mmyy[1] >= year){
+        //   decision = true;
+        //   mmyy.join('').toString();
+        //   year.toString();
+
+        // }else{
+        //   decision = false;
+
+        // }
         return decision;  
       }
       const validateCardHolderName = (name) => {
@@ -275,12 +284,14 @@
           console.log(inp.value, cardNum);
         });
         
-        
-        if(user.cardNumber == cardNum){
-          console.log('card valid for the specified user');
-        }else{
-          console.log('Card number does not match. pls enter the correct card number', inputs);
-        }
+        if(user != undefined){
+          if(user.cardNumber == cardNum){
+            console.log('card valid for the specified user');
+          }else{
+            console.log('Card number does not match. pls enter the correct card number', inputs);
+          }
+
+        };
 
       }
 
